@@ -14,8 +14,7 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans,
-    Droid Sans, Helvetica Neue, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
 a {
@@ -29,7 +28,7 @@ a {
   box-sizing: border-box;
 }
 
-[class^="RampText--"] {
+[class^='RampText--'] {
   line-height: 1.5;
   font-size: 1rem;
   margin: 0;
@@ -43,7 +42,7 @@ a {
   color: var(--color-dark-shade);
 }
 
-[class^="RampTextHeading--"] {
+[class^='RampTextHeading--'] {
   margin: 0;
   line-height: 1;
 }
@@ -81,6 +80,7 @@ hr.RampBreak--l {
 
 .RampInputSelect--root {
   width: 100%;
+  position: relative;
 }
 
 .RampInputSelect--input {
@@ -92,7 +92,11 @@ hr.RampBreak--l {
 
 .RampInputSelect--dropdown-container {
   display: none;
-  position: fixed;
+  /* 
+    Changing the position from fixed to static will work but the dropdown will push the transaction pane towards the bottom, however, if we use the position as absolute and make the parent element of the dropdown relative then the dropdown will always stick to the parent div, In order to make this work, I had to change the dynamic top value of the dropdown.
+  */
+  position: absolute;
+  z-index: 2;
   width: 100%;
   max-width: 700px;
   border: 1px solid var(--color-darker-shade);
@@ -123,6 +127,9 @@ hr.RampBreak--l {
 
 .RampInputCheckbox--container {
   display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
 }
 
 .RampInputCheckbox--label {
@@ -142,7 +149,7 @@ hr.RampBreak--l {
 }
 
 .RampInputCheckbox--label-checked:before {
-  content: " ";
+  content: ' ';
   width: 100%;
   height: 100%;
   border-color: var(--color-constructive);
@@ -150,7 +157,16 @@ hr.RampBreak--l {
 }
 
 .RampInputCheckbox--input {
-  display: none;
+  /* display: none;
+    Because the Input checkbox is hidden, We won't be able to click on the actual checkbox element, As we know, the native HTML checkbox can't be customized, to do the customization, an actual checkbox is used and a sibling HTML element is styled based on the requirements. Here I'm using opacity as zero and a position property in order to superimpose the input element on the label element. once we do that we will be able to click on the input box but it won't be visible to the user, and it will behave as if there is a custom checkbox.
+
+   */
+  position: absolute;
+  opacity: 0;
+  z-index: 1;
+  cursor: pointer;
+  width: 1.25rem;
+  height: 1.25rem;
 }
 
 .RampButton {
